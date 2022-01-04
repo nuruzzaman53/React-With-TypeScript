@@ -1,73 +1,60 @@
 import React,{useState} from 'react'
-import {State as Props} from '../App'
 
-interface IProps {
-    people: Props['people']
-    setPeople: React.Dispatch<React.SetStateAction<Props['people']>>
+interface PeopelInfo {
+    name: string
+    email:string
+    password: string
 }
 
-const Form: React.FC<IProps> = ({people,setPeople}) => {
 
-    const [input,setInput] = useState({
+const Form: React.FC = () => {
+
+    const [people,setPeople] = useState<PeopelInfo>({
         name:'',
-        age:'',
-        url:'',
-        note:''
+        email:'',
+        password:''
     })
 
-    const {name,age,url,note} = input
+    const {name,email,password} = people
 
-    const handleChange= (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>):void => {
-        setPeople({
-            ...people,[e.target.name] : e.target.value
-        })
-    }
+    return (
+        <div className='container mb-3'>
+            <div className='row'>
+                <form>
+                    <div className='form-group'>
+                        <input 
+                            type='text' 
+                            placeholder='Enter Your Name......' 
+                            className='form-control col-6 mt-2' 
+                            spellCheck='true'
+                            value={name}
+                        />
+                    </div>
+                    <div className='form-group'>
+                        <input 
+                            type='email' 
+                            placeholder='Enter Your Email Address....' 
+                            className='form-control col-6 mt-2'
+                            value={email} 
+                        />
+                    </div>
+                    <div className='form-group'>
+                        <input 
+                            type='text' 
+                            placeholder='Enter Your Password....' 
+                            className='form-control col-6 mt-2'
+                            value={password} 
+                        />
+                    </div>
 
-    const clickSubmit = (): void => {
-        setPeople([
-            ...people,{ 
-                name:name,
-                age:parseInt(age),
-                url:url,
-                note:note,
-            }
-        ])
-    }
+                    <button 
+                        className='btn btn-outline-danger mt-3 px-4'
+                        style={{ borderRadius:'20px'}}>
+                        Submit Information
+                    </button>
 
-    return(
-        <div>
-            <h3>Add a new person to your party</h3>
-            <form>
-                <input 
-                   type='text' 
-                   placeholder='Enter Your Name'
-                   value={name}
-                   name='name'
-                   onChange={handleChange} 
-                />
-                 <input 
-                   type='text' 
-                   placeholder='Enter Your Age'
-                   value={age}
-                   name='age'
-                   onChange={handleChange}  
-                />
-                <input 
-                   type='text' 
-                   placeholder='Paste Your Photo URL'
-                   value={url}
-                   name='url'
-                   onChange={handleChange}  
-                />
-                <textarea 
-                   placeholder='Paste Your Photo URL'
-                   value={note}
-                   name='note' 
-                   onChange={handleChange} 
-                />
-
-                <button onClick={clickSubmit}> Submit Information</button>
-            </form>
+                </form>
+           </div>
         </div>
     )
 }
